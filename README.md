@@ -1,95 +1,58 @@
-# Expense-Tracker-Backend
-The backend server code that allows the expense tracker GUI to work effectively
+# 🧾 Expense-Tracker-Backend
 
-# Client Expense Tracker (JavaFX)
+This is the Spring Boot backend server that works behind the [Client-Expense-Tracker-GUI](https://github.com/Bokorou/Client-Expense-Tracker-GUI) — a personal finance desktop app I built using Java.
 
-A sleek JavaFX desktop app that helps users manage personal expenses and financial categories. Designed to be dynamic and reactive to user input, this project mimics the feel of modern expense tracking tools.
-
-## 📸 Screenshot
-
-![App Screenshot](screenshot.png)
-
+The backend exposes RESTful APIs that allows users to manage data such as transactions, categories, and account information. All data is persisted to a MySQL database using Spring Data JPA.
 
 ---
 
 ## 🎯 Purpose
 
-I built this project to deepen my understanding of Java fundamentals — especially object-oriented programming, GUI development with JavaFX, and client-server communication. What started as a way to practice Java quickly became a hands-on exploration of **layouts, event handling, and API communication**.
+This project was created to:
+- Learn backend architecture using Spring Boot
+- Practice designing REST APIs from scratch
+- Understand how a GUI communicates with a server
+- Work with SQL databases through JPA
+- Explore data serialization via JSON
 
 ---
 
-## 💡 What I Learned
+## 🚀 What It Does
 
-### 🔁 Scene Navigation and Layouts
-- Worked with `Stage`, `Scene`, `VBox`, and `HBox` to construct clean and responsive UI layouts.
-- Created a reusable `ViewNavigator` class to manage transitions between views.
-- Applied styling through CSS and explored JavaFX component customization.
-
-### 👥 MVC Pattern in Practice
-- Separated UI logic (`View` classes) from application logic (`Controller` classes).
-- Used **dependency injection** to connect views to their controllers, keeping code organized and reusable.
-
-Example pattern:
-```java
-private void initialize() {
-    loginView.getLoginButton().setOnMouseClicked(event -> {
-        if (!validateUser()) return;
-        // navigate to dashboard
-    });
-}
-```
-### Backend Communication
-- Built a separate Java backend to handle user and transaction data.
-- Used HttpURLConnection and JsonObject to send/receive data via HTTP.
-- Implemented basic CRUD operations by connecting the client app to the backend API.
-
-Example pattern:
-```java
- public static List<TransactionCategory> getAllTransactionCategoriesByUser(User user) {
-        List<TransactionCategory> categories = new ArrayList<>();
-
-        HttpURLConnection conn = null;
-        try {
-            conn = ApiUtil.fetchApi("/api/v1/transaction-category/user/" + user.getId(),
-                    ApiUtil.RequestMethod.GET, null);
-
-            if (conn.getResponseCode() != 200) {
-                System.out.println("error: " + conn.getResponseCode());
-                ;
-            }
-
-            String result = ApiUtil.readApiResponse(conn);
-            JsonArray resultJsonArray = new JsonParser().parse(result).getAsJsonArray();
-
-            for (JsonElement jsonElement : resultJsonArray) {
-                int categoryId = jsonElement.getAsJsonObject().get("id").getAsInt();
-                String categoryName = jsonElement.getAsJsonObject().get("categoryName").getAsString();
-                String categoryColour = jsonElement.getAsJsonObject().get("categoryColour").getAsString();
-
-                categories.add(new TransactionCategory(categoryId, categoryName, categoryColour));
-            }
-            return categories;
-```
-
-### 🗃️ SQL and Utility Classes
-- Created SqlUtil and ApiUtil utility classes to streamline backend interaction.
-- Learned how to parse and format JSON.
+- Exposes secure API endpoints for the client
+- Performs full CRUD operations for:
+  - Transactions
+  - Transaction categories
+  - User accounts
+- Uses pagination and filtering to serve transaction history
+- Connects to a MySQL database using JPA
+- Returns JSON responses to the client application
 
 ---
 
-## 🛠 Technologies Used
-- Java 23
-- javaFX
-- MySQL
-- CSS Bootstrap
-- Maven
+## 🧠 Key Concepts I Learned
+
+- How to structure a real-world Spring Boot project
+- Setting up RESTful routes and controllers
+- Persisting and querying data using JPA repositories
+- Connecting JavaFX frontends to a backend server
+- Debugging and testing endpoints using Postman
+- Configuring `application.properties` for database connectivity
 
 ---
 
-### 🧠 Reflections
+## 🧠 Reflection
 
-This was my first major Java GUI project, and it pushed me to combine everything I’ve learned,
-from Java syntax and OOP to scene navigation and HTTP communication. 
-I especially enjoyed building the backend separately and seeing how client-server communication works in real time.
-The code for the backend server can be found in the **Expense-Tracker-Backend** repository.
+Working on this project really opened my eyes to how powerful Spring Boot is for building backend systems. 
+It helped me see Java as more than just syntax but also as a way to build useful, real-world applications that people interact with every day.
+In the process I was introduced to some interesting real-world concepts like:
+- Port configuration
+- Data transfer via JSON
+- Structuring API projects cleanly
+- Managing data persistence with JPA
+- API authentication & testing workflows
+
+
+
+
 
